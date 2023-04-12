@@ -10,7 +10,7 @@ public class ControllerUsers {
   private User usuario;
   private FilaEncadeada<User> filaPreferencial = new FilaEncadeada<>();
   private FilaEncadeada<User> filaNaoPreferencial = new FilaEncadeada<>();
-  private int tempoTotal = 0;
+  private int serviceTime = 1;
 
   public FilaEncadeada<User> getFilaPreferencial() {
     return filaPreferencial;
@@ -70,8 +70,15 @@ public class ControllerUsers {
     while(filaPreferencial.size() != 0 && filaNaoPreferencial.size() != 0){
       if(filaPreferencial.getFirst().getInitTime().equals(filaNaoPreferencial.getFirst().getInitTime()))
         atendidos += atendimentoPreferencial() + "\n";
-      else 
-        atendidos += atendimentoPadrao() + "\n";
+      else{
+        int auxPref = Integer.parseInt(filaPreferencial.getFirst().getInitTime().replaceAll(";",""));
+        int auxPrad = Integer.parseInt(filaNaoPreferencial.getFirst().getInitTime().replaceAll(";",""));
+
+        if(auxPref < auxPrad){
+          atendidos += atendimentoPreferencial() + "\n";
+        }else
+          atendidos += atendimentoPadrao() + "\n";
+      } 
     }
     while(filaPreferencial.size() != 0 || filaNaoPreferencial.size() != 0){
       if(filaNaoPreferencial.size()!=0)
@@ -86,8 +93,11 @@ public class ControllerUsers {
   public String atendimentoPadrao(){
     if(filaNaoPreferencial.size() == 0)
       return"";
-    tempoTotal += Integer.parseInt(this.filaNaoPreferencial.getFirst().getServiceTime());
-    String atendimento = "Atendimento [ " + (numAtendimento+1) + " ] <===> Cliente [" + this.filaNaoPreferencial.getFirst().getClienteId().substring(0, this.filaNaoPreferencial.getFirst().getInitTime().length() - 1) + "] da Fila Padrão foi atendido com o Tempo Total de [ " + tempoTotal+" ]";
+
+    int tempoChegada = Integer.parseInt(this.filaNaoPreferencial.getFirst().getInitTime().replaceAll(";",""));
+    serviceTime += Integer.parseInt(this.filaNaoPreferencial.getFirst().getServiceTime());
+    int tempoReal = serviceTime-tempoChegada;
+    String atendimento = "Atendimento [ " + (numAtendimento+1) + " ] <===> Cliente [" + this.filaNaoPreferencial.getFirst().getClienteId().replaceAll(";","")  + "] atendido na Fila Padrão com o Tempo Total de [ " + tempoReal + " ]";
     this.filaNaoPreferencial.dequeue();
     numAtendimento++;
     return atendimento;
@@ -96,8 +106,10 @@ public class ControllerUsers {
   public String atendimentoPreferencial(){
     if(filaPreferencial.size() == 0)
       return"";
-    tempoTotal += Integer.parseInt(this.filaPreferencial.getFirst().getServiceTime());
-    String atendimento = "Atendimento [ " + (numAtendimento+1) + " ] <===> Cliente [" + this.filaPreferencial.getFirst().getClienteId().substring(0, this.filaPreferencial.getFirst().getInitTime().length() - 1) + "] da Fila Preferencial foi atendido com o Tempo Total de [ " + tempoTotal+ " ]";
+    int tempoChegada = Integer.parseInt(this.filaPreferencial.getFirst().getInitTime().replaceAll(";",""));
+    serviceTime += Integer.parseInt(this.filaPreferencial.getFirst().getServiceTime());
+    int tempoReal = serviceTime-tempoChegada;
+    String atendimento = "Atendimento [ " + (numAtendimento+1) + " ] <===> Cliente [" + this.filaPreferencial.getFirst().getClienteId().replaceAll(";","") + "] atendido na Fila Preferencial com o Tempo Total de [ " + tempoReal + " ]";
     this.filaPreferencial.dequeue();
     numAtendimento++;
     return atendimento;
