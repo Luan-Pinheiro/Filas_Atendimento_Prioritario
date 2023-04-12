@@ -19,7 +19,6 @@ public class Principal {
             System.out.println("\nInsira o nome do arquivo a ser Lido [ Obs - Insira com o final [ .ser ] ]");
             Scanner stdin2 = new Scanner(System.in);
             String arquivo = stdin2.next();
-            System.out.println("fdpajdspiajdaoisdj");
             System.out.println();
             ctrlUsers.insertUserRead(arquivo);
 
@@ -28,6 +27,8 @@ public class Principal {
 
             System.out.println("<=======> FILA PADRÃO <=======>");
             System.out.println(ctrlUsers.getFilaNaoPreferencial().printCompleteQueue());
+            
+            System.out.println(ctrlUsers.atendeOrdem());
             break;
             // Fim case 01
 
