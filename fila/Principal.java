@@ -16,9 +16,10 @@ public class Principal {
 
         switch (entrada2) {
           case "1":
-            System.out.println("\nInsira o nome do arquivo a ser Lido [ Obs. Insira com o final [ .ser ] ]");
+            System.out.println("\nInsira o nome do arquivo a ser Lido [ Obs - Insira com o final [ .ser ] ]");
             Scanner stdin2 = new Scanner(System.in);
             String arquivo = stdin2.next();
+            System.out.println("fdpajdspiajdaoisdj");
             System.out.println();
             ctrlUsers.insertUserRead(arquivo);
 
