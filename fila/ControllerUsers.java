@@ -6,6 +6,7 @@
 import java.util.ArrayList;
 
 public class ControllerUsers {
+  int numAtendimento =0;
   private User usuario;
   private FilaEncadeada<User> filaPreferencial = new FilaEncadeada<>();
   private FilaEncadeada<User> filaNaoPreferencial = new FilaEncadeada<>();
@@ -66,52 +67,39 @@ public class ControllerUsers {
 
   public String atendeOrdem() {
     String atendidos = "";
-  
-    while (filaPreferencial.size() !=0 && filaNaoPreferencial.size() != 0) {
-      String aux1 = "";
-      String aux2 = "";
-
-      if (filaNaoPreferencial.estaVazia() == false) {
-        aux1 = filaNaoPreferencial.getFirst().getInitTime();
-        aux1 = aux1.replaceAll(";", "");
-      }
-
-      if (filaPreferencial.estaVazia() == false) {
-        aux2 = filaPreferencial.getFirst().getInitTime();
-        aux2 = aux2.replaceAll(";", "");
-      }
-
-      if (aux1.equals(null)) {
-        atendidos += atendimentoPadrao() + "\n";
-      }
-      if (aux2.equals(null)) {
+    while(filaPreferencial.size() != 0 && filaNaoPreferencial.size() != 0){
+      if(filaPreferencial.getFirst().getInitTime().equals(filaNaoPreferencial.getFirst().getInitTime()))
         atendidos += atendimentoPreferencial() + "\n";
-      }
-
-      if (aux1 != null && aux2 != null) {
-        if (aux1.equals(aux2)) {
-          atendidos += atendimentoPreferencial() + "\n";
-        } else {
-          atendidos += atendimentoPadrao() + "\n";
-        }
-      }
+      else 
+        atendidos += atendimentoPadrao() + "\n";
     }
-    return atendidos;
+    while(filaPreferencial.size() != 0 || filaNaoPreferencial.size() != 0){
+      if(filaNaoPreferencial.size()!=0)
+        atendidos += atendimentoPadrao() + "\n";
+      else 
+        atendidos += atendimentoPreferencial() + "\n";
+    } 
+    return "\n" + atendidos;
   }
 
-  public String atendimentoPadrao() {
-    tempoTotal += Integer.parseInt(this.filaNaoPreferencial.getFirst().getServiceTime());
-    String atendimento = "Cliente [" + this.filaNaoPreferencial.getFirst().getClienteId()+ "] da Fila Padrão foi atendido com o tempo de " + tempoTotal;
-    this.filaNaoPreferencial.dequeue();
 
+  public String atendimentoPadrao(){
+    if(filaNaoPreferencial.size() == 0)
+      return"";
+    tempoTotal += Integer.parseInt(this.filaNaoPreferencial.getFirst().getServiceTime());
+    String atendimento = "Atendimento [ " + (numAtendimento+1) + " ] <===> Cliente [" + this.filaNaoPreferencial.getFirst().getClienteId().substring(0, this.filaNaoPreferencial.getFirst().getInitTime().length() - 1) + "] da Fila Padrão foi atendido com o Tempo Total de [ " + tempoTotal+" ]";
+    this.filaNaoPreferencial.dequeue();
+    numAtendimento++;
     return atendimento;
   }
 
-  public String atendimentoPreferencial() {
+  public String atendimentoPreferencial(){
+    if(filaPreferencial.size() == 0)
+      return"";
     tempoTotal += Integer.parseInt(this.filaPreferencial.getFirst().getServiceTime());
-    String atendimento = "Cliente [" + this.filaPreferencial.getFirst().getClienteId()+ "] da Fila Preferencial foi atendido com o tempo de " + tempoTotal;
+    String atendimento = "Atendimento [ " + (numAtendimento+1) + " ] <===> Cliente [" + this.filaPreferencial.getFirst().getClienteId().substring(0, this.filaPreferencial.getFirst().getInitTime().length() - 1) + "] da Fila Preferencial foi atendido com o Tempo Total de [ " + tempoTotal+ " ]";
     this.filaPreferencial.dequeue();
-
+    numAtendimento++;
     return atendimento;
   }
 }
