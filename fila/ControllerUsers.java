@@ -59,54 +59,8 @@ public class ControllerUsers{
   }
 
   public String atendeOrdem(){
-    int sizeFP = filaPreferencial.size();
-    int sizeFNP = filaNaoPreferencial.size();
     int tempoAtendimento = 0;
     String aux = "";
-    try{
-      if(sizeFNP <= sizeFP){
-        if(sizeFNP >0){
-          for(int i=0; i < sizeFNP; i++){  
-            if( sizeFP > 0){
-              for(int j=0; j < sizeFP; j++){
-                if(Integer.parseInt(this.filaNaoPreferencial.getIndex(i).getInitTime().substring(0, this.filaNaoPreferencial.getIndex(i).getInitTime().length() - 1)) <= Integer.parseInt(this.filaPreferencial.getIndex(j).getInitTime().substring(0, this.filaPreferencial.getIndex(j).getInitTime().length() - 1))){            
-                  tempoAtendimento += atendementoPreferencial(j);
-                  aux += "Idoso da posicao " + (j+1) + " da Fila preferencial foi atendido\n |-> Tempo de atendimento: " + tempoAtendimento + "\n";
-                }else{
-                  tempoAtendimento += atendimentoPadrao(i);
-                  aux += "Adulto da posicao " + (i+1) + " da Fila padrão foi atendido\n |-> Tempo de atendimento: " + tempoAtendimento + "\n";
-                }
-               }
-            }else{
-              tempoAtendimento += atendimentoPadrao(i);
-              aux += "Adulto da posicao " + (i+1) + " da Fila padrão foi atendido\n |-> Tempo de atendimento: " + tempoAtendimento + "\n";
-            }
-          }
-        }
-      }
-      else{
-        if(sizeFP >0){
-          for(int i=0; i < sizeFP; i++){  
-            if( sizeFNP > 0){
-              for(int j=0; j < sizeFNP; j++){
-                if(Integer.parseInt(this.filaPreferencial.getIndex(i).getInitTime().substring(0, this.filaPreferencial.getIndex(i).getInitTime().length() - 1)) <= Integer.parseInt(this.filaNaoPreferencial.getIndex(j).getInitTime().substring(0, this.filaNaoPreferencial.getIndex(j).getInitTime().length() - 1))){            
-                  tempoAtendimento += atendementoPreferencial(i);
-                  aux += "Idoso da posicao " + (j+1) + " da Fila preferencial foi atendido\n |-> Tempo de atendimento: " + tempoAtendimento + "\n";
-                }else{
-                  tempoAtendimento += atendimentoPadrao(j);
-                  aux += "Adulto da posicao " + (i+1) + " da Fila padrão foi atendido\n |-> Tempo de atendimento: " + tempoAtendimento + "\n";
-                }
-               }
-            }else{
-              tempoAtendimento += atendimentoPadrao(i);
-              aux += "Adulto da posicao " + (i+1) + " da Fila padrão foi atendido\n |-> Tempo de atendimento: " + tempoAtendimento + "\n";
-            }
-          }
-        }
-      } 
-    }catch(NullPointerException e){
-      e.printStackTrace();
-    }
     return aux;
   }
 
