@@ -51,6 +51,13 @@ import java.util.ArrayList;
     }
     return userRead;
   }
+
+  public void writeFinalArchive(String id, String serviceTime) throws IOException{
+    FileWriter fw = new FileWriter("ServiceTimeStatus.txt", true);
+    fw.write(id+serviceTime);
+    fw.close();
+  }
+
   public ArrayList<User> userInsert(User user) {
     //Instanciando objetos para realizar a serialização e escrição/leitura do arquivo
     FileOutputStream fluxo = null;

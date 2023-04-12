@@ -106,7 +106,9 @@ public class Principal {
             } // Fim While 01
             break;
             // Fim Case 02
-
+          case "3":
+            
+            break;
           default:
             System.out.println("\nEntrada inválida");
         } // Fim Switch Principal
