@@ -108,6 +108,10 @@ public class ListaEncadeada<T> {
     return user.getUsuario();
   }
 
+  public boolean estaVazia() {
+    return (primeiroElemento == null);
+  }
+
   public void print(){
     Elemento<T> pointer = this.primeiroElemento;
     System.out.print(" [ ");

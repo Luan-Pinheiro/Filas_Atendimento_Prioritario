@@ -27,6 +27,7 @@ public class Principal {
 
             System.out.println("<=======> FILA PADRÃO <=======>");
             System.out.println(ctrlUsers.getFilaNaoPreferencial().printCompleteQueue());
+            System.out.println(ctrlUsers.atendeOrdem());
             break;
             // Fim case 01
 

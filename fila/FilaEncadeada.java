@@ -12,6 +12,11 @@ public class FilaEncadeada<T> implements Fila {
     lista.esvaziaLista();
     count = 0;
   }
+
+  public boolean estaVazia() {
+    return lista.estaVazia();
+  }
+
   @Override
   public T getFirst(){
     return lista.getPrimeiroElemento();

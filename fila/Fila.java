@@ -8,6 +8,7 @@ public interface Fila<T> {
   Object getFirst();
   String toPrint(User user);
   Object getLast();
+  boolean estaVazia();
   void queue(T value);
   void dequeue();
   void print();
